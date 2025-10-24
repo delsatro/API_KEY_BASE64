@@ -1,0 +1,26 @@
+name: Deploy Script
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Run Base64 Script
+      env:
+        # Здесь мы передаем закодированный секрет из настроек репозитория.
+        # Вы должны предварительно создать этот секрет в настройках GitHub.
+        API_KEY_BASE64: ${{ secrets.YOUR_API_KEY_BASE64 }} 
+      run: |
+        # Делаем скрипт исполняемым
+        chmod +x ./deploy.sh
+        # Запускаем скрипт
+        ./deploy.sh
